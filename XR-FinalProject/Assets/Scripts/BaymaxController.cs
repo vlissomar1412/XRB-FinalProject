@@ -18,7 +18,7 @@ public class BaymaxController : MonoBehaviour
     private AnimationTrigger animTrig;
 
 
-    IEnumerator intro, alcohol, idle;
+    IEnumerator intro, alcohol, idle, bandaid;
     // GameObject grabbedObj;
     // Start is called before the first frame update
     void Start()
@@ -26,6 +26,7 @@ public class BaymaxController : MonoBehaviour
         intro = IntroCoroutine();
         alcohol = AlchoholCoroutine();
         idle = IdleCoroutine();
+        bandaid = BandAidCoroutine();
 
 
         currentState = State.Idle;
@@ -52,7 +53,15 @@ public class BaymaxController : MonoBehaviour
             currentState = State.Demo;
             StartCoroutine(alcohol);
         }
+    }
 
+    public void BandAidDemo()
+    {
+        if (currentState == State.Idle)
+        {
+            currentState = State.Demo;
+            StartCoroutine(bandaid);
+        }
     }
 
 
@@ -61,6 +70,15 @@ public class BaymaxController : MonoBehaviour
         currentState = State.Explain;
         // display text: reference audio clip
         audioSrc.PlayOneShot(clips[1]);             // play audio clip
+        // play explanation animation
+        yield return new WaitForSeconds(5.0f);
+        // hide text
+    }
+
+    IEnumerator BandAidCoroutine()
+    {
+        currentState = State.Explain;
+        // display text: write something ig
         // play explanation animation
         yield return new WaitForSeconds(5.0f);
         // hide text

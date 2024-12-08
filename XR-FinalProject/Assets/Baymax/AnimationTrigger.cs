@@ -17,6 +17,7 @@ public class AnimationTrigger : MonoBehaviour
     // Methods to trigger the animations
     public void RotatingHead()
     {
+        ResetAnimBools();
         animationController.SetLayerWeight(WALK_LAYER, 0);
         animationController.SetLayerWeight(HEAD_LAYER, 1);
         animationController.SetLayerWeight(WAVING_LAYER, 0);
@@ -25,6 +26,7 @@ public class AnimationTrigger : MonoBehaviour
     }
     public void Walking()
     {
+        ResetAnimBools();
         animationController.SetLayerWeight(WALK_LAYER, 1);
         animationController.SetLayerWeight(HEAD_LAYER, 0);
         animationController.SetLayerWeight(WAVING_LAYER, 0);
@@ -33,6 +35,7 @@ public class AnimationTrigger : MonoBehaviour
     }
     public void WavingHandUp()
     {
+        ResetAnimBools();
         animationController.SetLayerWeight(WALK_LAYER, 0);
         animationController.SetLayerWeight(HEAD_LAYER, 0);
         animationController.SetLayerWeight(WAVING_LAYER, 1);
@@ -41,6 +44,7 @@ public class AnimationTrigger : MonoBehaviour
     }
     public void WavingHandDown()
     {
+        ResetAnimBools();
         animationController.SetLayerWeight(WALK_LAYER, 0);
         animationController.SetLayerWeight(HEAD_LAYER, 0);
         animationController.SetLayerWeight(WAVING_LAYER, 1);
@@ -49,6 +53,7 @@ public class AnimationTrigger : MonoBehaviour
     }
     public void PointingFingerUp()
     {
+        ResetAnimBools();
         animationController.SetLayerWeight(WALK_LAYER, 0);
         animationController.SetLayerWeight(HEAD_LAYER, 0);
         animationController.SetLayerWeight(WAVING_LAYER, 0);
@@ -57,11 +62,22 @@ public class AnimationTrigger : MonoBehaviour
     }
     public void PointingFingerDown()
     {
+        ResetAnimBools();
         animationController.SetLayerWeight(WALK_LAYER, 0);
         animationController.SetLayerWeight(HEAD_LAYER, 0);
         animationController.SetLayerWeight(WAVING_LAYER, 0);
         animationController.SetLayerWeight(POINTING_LAYER, 1);
         animationController.SetBool("PointingFingerDown", true);
+    }
+
+    public void ResetAnimBools()
+    {
+        animationController.SetBool("RotatingHead", false);
+        animationController.SetBool("Walking", false);
+        animationController.SetBool("WavingHandUp", false);
+        animationController.SetBool("WavingHandDown", false);
+        animationController.SetBool("PointingFingerUp", false);
+        animationController.SetBool("PointingFingerDown", false);
     }
 
     // Get user inputs from the keyboard

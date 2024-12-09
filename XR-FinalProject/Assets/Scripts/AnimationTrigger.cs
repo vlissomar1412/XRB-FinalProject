@@ -3,6 +3,18 @@ using System.Collections;
 
 public class AnimationTrigger : MonoBehaviour
 {
+    // PLEASE READ
+    //
+    // METHODS HERE HAVE BOON MOVED TO BAYMAXCONTROLLER;
+    // THIS SCRIPT IS NOT IN SCENE AND NOT TO BE USED
+
+
+
+
+
+
+
+
     private Animator animationController;
     private const int WALK_LAYER = 0;
     private const int HEAD_LAYER = 1;

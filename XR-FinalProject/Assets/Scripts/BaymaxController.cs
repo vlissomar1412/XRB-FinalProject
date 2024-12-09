@@ -18,7 +18,7 @@ public class BaymaxController : MonoBehaviour
     private AnimationTrigger animTrig;
 
 
-    IEnumerator intro, alcohol, idle, bandaid;
+    IEnumerator intro, alcohol, idle, bandaid, checkup;
     // GameObject grabbedObj;
     // Start is called before the first frame update
     void Start()
@@ -27,13 +27,13 @@ public class BaymaxController : MonoBehaviour
         alcohol = AlchoholCoroutine();
         idle = IdleCoroutine();
         bandaid = BandAidCoroutine();
+        checkup = HealthCheckupCoroutine();
 
 
         currentState = State.Idle;
         animTrig = GetComponent<AnimationTrigger>();
         audioSrc = GetComponent<AudioSource>();
         StartCoroutine(intro);
-        StartCoroutine(idle); // code for health checkup should be incorporated here
     }
 
     // Update is called once per frame
@@ -97,6 +97,8 @@ public class BaymaxController : MonoBehaviour
         animTrig.WavingHandDown();
         yield return new WaitForSeconds(3.0f);
         // hide text
+
+        StartCoroutine(checkup);
     }
 
 
@@ -110,5 +112,14 @@ public class BaymaxController : MonoBehaviour
         // hide text
         yield return new WaitForSeconds(15.0f);
         idling = false;
+    }
+
+    public IEnumerator HealthCheckupCoroutine()
+    {
+        currentState = State.Checkup;
+        // edit code from here on
+        yield return new WaitForSeconds(5f);
+
+        StartCoroutine(idle);
     }
 }

@@ -41,18 +41,18 @@ public class BaymaxController : MonoBehaviour
         txt.text = start + "Startup";
         audioSrc = GetComponent<AudioSource>();
         animationController = GetComponent<Animator>();
-        StartCoroutine(intro);
+        StartCoroutine("IntroCoroutine");
     }
 
     // Update is called once per frame
     void Update()
     {
-        txt.text = start + end;
+        txt.text = start + "\n" + end;
         start = Enum.GetName(typeof(State), currentState);
         //prevents Idle() from being called every fucking frame
         if (currentState == State.Idle && !idling)
         {
-            StartCoroutine(idle);
+            StartCoroutine("IdleCoroutine");
         }
     }
 
@@ -62,43 +62,47 @@ public class BaymaxController : MonoBehaviour
         currentState = State.Idle;
         start = "Idle";
         end = "";
-        StartCoroutine(idle);
+        StartCoroutine("IdleCoroutine");
     }
 
     public void BactineDemo()
     {
         end = "Bactine Grabbed";
-        if (currentState != State.Checkup)
+        if (currentState == State.Checkup)
         {
-            currentState = State.Demo;
-            idling = false;
-            StopAllCoroutines();
-            StartCoroutine(bactine);
+            return;
         }
+            
+        currentState = State.Demo;
+        idling = false;
+        StopAllCoroutines();
+        StartCoroutine("BactineCoroutine");
     }
 
     public void BandAidDemo()
     {
         end = "Band Aids Grabbed";
-        if (currentState != State.Checkup)
+        if (currentState == State.Checkup)
         {
-            currentState = State.Demo;
-            idling = false;
-            StopAllCoroutines();
-            StartCoroutine(bandaid);
+            return;
         }
+        currentState = State.Demo;
+        idling = false;
+        StopAllCoroutines();
+        StartCoroutine("BandAidCoroutine");
     }
 
     public void ThermometerDemo()
     {
         end = "Thermometer Grabbed";
-        if (currentState != State.Checkup)
+        if (currentState == State.Checkup)
         {
-            currentState = State.Demo;
-            idling = false;
-            StopAllCoroutines();
-            StartCoroutine(thermometer);
+            return;
         }
+        currentState = State.Demo;
+        idling = false;
+        StopAllCoroutines();
+        StartCoroutine("ThermometerCoroutine");
     }
 
     IEnumerator BactineCoroutine()
@@ -169,7 +173,7 @@ public class BaymaxController : MonoBehaviour
         // edit code from here on
         yield return new WaitForSeconds(5f);
 
-        StartCoroutine(idle);
+        StartCoroutine("IdleCoroutine");
     }
 
 

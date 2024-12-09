@@ -135,13 +135,14 @@ public class BaymaxController : MonoBehaviour
     
     IEnumerator ThermometerCoroutine()
     {
+
         end =  "Thermometer Coroutine in Process";// display text: write something abt how baymax's scan function uses the same technology with infrared lights idk googl
         RotatingHead();                             // play explanation animation
 
         //perhaps add functionality here
         yield return new WaitForSeconds(5.0f);
 
-        ResetRotatingHead();
+        // ResetRotatingHead();
 
         // hide text
 
@@ -202,12 +203,14 @@ public class BaymaxController : MonoBehaviour
     // ANIMATION STUF 
     public void RotatingHead()
     {
-        //ResetAnimBools();
+        ResetAnimBools();
         animationController.SetLayerWeight(WALK_LAYER, 0);
         animationController.SetLayerWeight(HEAD_LAYER, 1);
         animationController.SetLayerWeight(WAVING_LAYER, 0);
         animationController.SetLayerWeight(POINTING_LAYER, 0);
         animationController.SetLayerWeight(HEADN_LAYER, 0);
+        // animationController.SetBool("RotatingHead", false);
+        animationController.SetBool("ResetRotatingHead", true);
         animationController.SetBool("ResetRotatingHead", false);
         animationController.SetBool("RotatingHead", true);
     }
@@ -218,8 +221,6 @@ public class BaymaxController : MonoBehaviour
         animationController.SetLayerWeight(WAVING_LAYER, 0);
         animationController.SetLayerWeight(POINTING_LAYER, 0);
         animationController.SetLayerWeight(HEADN_LAYER, 0);
-        animationController.SetBool("RotatingHead", false);
-        animationController.SetBool("ResetRotatingHead", true);
     }
     public void Walking()
     {

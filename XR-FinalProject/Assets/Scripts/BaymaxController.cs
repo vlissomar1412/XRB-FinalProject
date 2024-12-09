@@ -178,13 +178,25 @@ public class BaymaxController : MonoBehaviour
     }
 
     IEnumerator HealthCheckupCoroutine()
-    {
-        currentState = State.Checkup;
-        // edit code from here on
-        yield return new WaitForSeconds(5f);
+{
+    currentState = State.Checkup;
 
-        StartCoroutine("IdleCoroutine");
-    }
+    txt.text = "I will scan you now";
+    audioSrc.PlayOneShot(scanClip); // Assuming scanClip has "I will scan you now" audio
+    yield return new WaitForSeconds(2.0f);
+
+    txt.text = "Scanning in progress...";
+    audioSrc.PlayOneShot(scanningSound); // Play scanning sound for 3 seconds
+    yield return new WaitForSeconds(3.0f);
+
+    txt.text = "Scan complete";
+    audioSrc.PlayOneShot(completeClip); // Assuming completeClip has "Scan complete" audio
+    yield return new WaitForSeconds(1.0f);
+
+    StartCoroutine("IdleCoroutine");
+    Idle();
+}
+
 
 
     // ANIMATION STUF 

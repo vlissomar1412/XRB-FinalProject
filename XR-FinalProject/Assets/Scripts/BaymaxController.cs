@@ -4,6 +4,9 @@ using UnityEngine;
 
 using UnityEngine.XR;
 using UnityEngine.XR.Interaction.Toolkit;
+
+using TMPro;
+using System;
 public class BaymaxController : MonoBehaviour
 {  // This script is responsible for Baymax's and the game's state depending on the players actions
     public enum State {Intro, Idle, Checkup, Explain, Demo };
@@ -12,6 +15,10 @@ public class BaymaxController : MonoBehaviour
 
     private AudioSource audioSrc;
     [SerializeField] AudioClip[] clips;
+
+    public TextMeshProUGUI txt;
+    string start = "";
+    string end = "";
 
     private Animator animationController;
     private const int WALK_LAYER = 0;
@@ -29,8 +36,9 @@ public class BaymaxController : MonoBehaviour
         checkup = HealthCheckupCoroutine();
         thermometer = ThermometerCoroutine();
 
-
         currentState = State.Intro;
+        start = Enum.GetName(typeof(State), currentState);
+        txt.text = start + "Startup";
         audioSrc = GetComponent<AudioSource>();
         animationController = GetComponent<Animator>();
         StartCoroutine(intro);
@@ -39,68 +47,91 @@ public class BaymaxController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        txt.text = start + end;
+        start = Enum.GetName(typeof(State), currentState);
         //prevents Idle() from being called every fucking frame
-        if(currentState == State.Idle && !idling)
+        if (currentState == State.Idle && !idling)
         {
             StartCoroutine(idle);
         }
     }
 
+    public void Idle()
+    {
+        StopAllCoroutines();
+        currentState = State.Idle;
+        start = "Idle";
+        end = "";
+        StartCoroutine(idle);
+    }
+
     public void BactineDemo()
     {
-        if (currentState == State.Idle)
+        end = "Bactine Grabbed";
+        if (currentState != State.Checkup)
         {
-            idling = false;
             currentState = State.Demo;
+            idling = false;
+            StopAllCoroutines();
             StartCoroutine(bactine);
         }
     }
 
     public void BandAidDemo()
     {
-        if (currentState == State.Idle)
+        end = "Band Aids Grabbed";
+        if (currentState != State.Checkup)
         {
-            idling = false;
             currentState = State.Demo;
+            idling = false;
+            StopAllCoroutines();
             StartCoroutine(bandaid);
         }
     }
 
     public void ThermometerDemo()
     {
-        if (currentState == State.Idle)
+        end = "Thermometer Grabbed";
+        if (currentState != State.Checkup)
         {
-            idling = false;
             currentState = State.Demo;
+            idling = false;
+            StopAllCoroutines();
             StartCoroutine(thermometer);
         }
     }
 
     IEnumerator BactineCoroutine()
     {
-        // display text: reference audio clip
+        end = "Bactine Coroutine in Process";  // display text: reference audio clip
         audioSrc.PlayOneShot(clips[1]);             // play audio clip
-        // play explanation animation
-        yield return new WaitForSeconds(5.0f);
+        RotatingHead();                             // play explanation animation
+        yield return new WaitForSeconds(3.0f);
         // hide text
+
+        Idle();
     }
 
     IEnumerator BandAidCoroutine()
     {
-        // display text: write something ig
-        // play explanation animation
-        yield return new WaitForSeconds(5.0f);
+        end =  "BandAid Coroutine in Process";  // display text: write something ig
+        RotatingHead();                             // play explanation animation
+        yield return new WaitForSeconds(3.0f);
         // hide text
+
+        Idle();
     }
     
     IEnumerator ThermometerCoroutine()
     {
-        // display text: write something abt how baymax's scan function uses the same technology with infrared lights idk googl
-        // play explanation animation
+        end =  "Thermometer Coroutine in Process";// display text: write something abt how baymax's scan function uses the same technology with infrared lights idk googl
+        RotatingHead();                             // play explanation animation
 
         //perhaps add functionality here
         yield return new WaitForSeconds(5.0f);
         // hide text
+
+        Idle();
     }
 
     IEnumerator IntroCoroutine()
@@ -117,19 +148,12 @@ public class BaymaxController : MonoBehaviour
         yield return new WaitForSeconds(3.0f);
         // hide text
 
-        StartCoroutine(checkup);
+        Idle();//checkup);
     }
 
-    // just for inspector assignments
-    public void Idle()
+    IEnumerator IdleCoroutine()
     {
-        StartCoroutine(idle);
-    }
-
-
-    public IEnumerator IdleCoroutine()
-    {
-        currentState = State.Idle;
+        end = "idling";
         idling = true;
         // periodically display text to interact with items
         // display text: ??? write something ig
@@ -139,7 +163,7 @@ public class BaymaxController : MonoBehaviour
         idling = false;
     }
 
-    public IEnumerator HealthCheckupCoroutine()
+    IEnumerator HealthCheckupCoroutine()
     {
         currentState = State.Checkup;
         // edit code from here on

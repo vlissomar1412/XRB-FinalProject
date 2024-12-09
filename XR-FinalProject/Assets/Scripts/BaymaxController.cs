@@ -25,6 +25,7 @@ public class BaymaxController : MonoBehaviour
     private const int HEAD_LAYER = 1;
     private const int WAVING_LAYER = 2;
     private const int POINTING_LAYER = 3;
+    private const int HEADN_LAYER = 4;
 
     IEnumerator intro, checkup, idle, bactine, bandaid, thermometer;
     void Start()
@@ -111,6 +112,9 @@ public class BaymaxController : MonoBehaviour
         audioSrc.PlayOneShot(clips[1]);             // play audio clip
         RotatingHead();                             // play explanation animation
         yield return new WaitForSeconds(3.0f);
+
+        ResetRotatingHead();
+
         // hide text
 
         Idle();
@@ -121,6 +125,9 @@ public class BaymaxController : MonoBehaviour
         end =  "BandAid Coroutine in Process";  // display text: write something ig
         RotatingHead();                             // play explanation animation
         yield return new WaitForSeconds(3.0f);
+
+        ResetRotatingHead();
+
         // hide text
 
         Idle();
@@ -133,6 +140,9 @@ public class BaymaxController : MonoBehaviour
 
         //perhaps add functionality here
         yield return new WaitForSeconds(5.0f);
+
+        ResetRotatingHead();
+
         // hide text
 
         Idle();
@@ -180,57 +190,83 @@ public class BaymaxController : MonoBehaviour
     // ANIMATION STUF 
     public void RotatingHead()
     {
-        ResetAnimBools();
+        //ResetAnimBools();
         animationController.SetLayerWeight(WALK_LAYER, 0);
         animationController.SetLayerWeight(HEAD_LAYER, 1);
         animationController.SetLayerWeight(WAVING_LAYER, 0);
         animationController.SetLayerWeight(POINTING_LAYER, 0);
+        animationController.SetLayerWeight(HEADN_LAYER, 0);
+        animationController.SetBool("ResetRotatingHead", false);
         animationController.SetBool("RotatingHead", true);
+    }
+    public void ResetRotatingHead()
+    {
+        animationController.SetLayerWeight(WALK_LAYER, 0);
+        animationController.SetLayerWeight(HEAD_LAYER, 1);
+        animationController.SetLayerWeight(WAVING_LAYER, 0);
+        animationController.SetLayerWeight(POINTING_LAYER, 0);
+        animationController.SetLayerWeight(HEADN_LAYER, 0);
+        animationController.SetBool("RotatingHead", false);
+        animationController.SetBool("ResetRotatingHead", true);
     }
     public void Walking()
     {
-        ResetAnimBools();
+        //ResetAnimBools();
         animationController.SetLayerWeight(WALK_LAYER, 1);
         animationController.SetLayerWeight(HEAD_LAYER, 0);
         animationController.SetLayerWeight(WAVING_LAYER, 0);
         animationController.SetLayerWeight(POINTING_LAYER, 0);
+        animationController.SetLayerWeight(HEADN_LAYER, 0);
         animationController.SetBool("Walking", true);
     }
     public void WavingHandUp()
     {
-        ResetAnimBools();
+        //ResetAnimBools();
         animationController.SetLayerWeight(WALK_LAYER, 0);
         animationController.SetLayerWeight(HEAD_LAYER, 0);
         animationController.SetLayerWeight(WAVING_LAYER, 1);
         animationController.SetLayerWeight(POINTING_LAYER, 0);
+        animationController.SetLayerWeight(HEADN_LAYER, 0);
         animationController.SetBool("WavingHandUp", true);
     }
     public void WavingHandDown()
     {
-        ResetAnimBools();
+        //ResetAnimBools();
         animationController.SetLayerWeight(WALK_LAYER, 0);
         animationController.SetLayerWeight(HEAD_LAYER, 0);
         animationController.SetLayerWeight(WAVING_LAYER, 1);
         animationController.SetLayerWeight(POINTING_LAYER, 0);
+        animationController.SetLayerWeight(HEADN_LAYER, 0);
         animationController.SetBool("WavingHandDown", true);
     }
     public void PointingFingerUp()
     {
-        ResetAnimBools();
+        //ResetAnimBools();
         animationController.SetLayerWeight(WALK_LAYER, 0);
         animationController.SetLayerWeight(HEAD_LAYER, 0);
         animationController.SetLayerWeight(WAVING_LAYER, 0);
         animationController.SetLayerWeight(POINTING_LAYER, 1);
+        animationController.SetLayerWeight(HEADN_LAYER, 0);
         animationController.SetBool("PointingFingerUp", true);
     }
     public void PointingFingerDown()
     {
-        ResetAnimBools();
+        //ResetAnimBools();
         animationController.SetLayerWeight(WALK_LAYER, 0);
         animationController.SetLayerWeight(HEAD_LAYER, 0);
         animationController.SetLayerWeight(WAVING_LAYER, 0);
         animationController.SetLayerWeight(POINTING_LAYER, 1);
+        animationController.SetLayerWeight(HEADN_LAYER, 0);
         animationController.SetBool("PointingFingerDown", true);
+    }
+    public void HeadNodding()
+    {
+        animationController.SetLayerWeight(WALK_LAYER, 0);
+        animationController.SetLayerWeight(HEAD_LAYER, 0);
+        animationController.SetLayerWeight(WAVING_LAYER, 0);
+        animationController.SetLayerWeight(POINTING_LAYER, 0);
+        animationController.SetLayerWeight(HEADN_LAYER, 1);
+        animationController.SetBool("HeadNodding", true);
     }
 
     public void ResetAnimBools()

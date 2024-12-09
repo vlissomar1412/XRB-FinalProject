@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AlcoholDemo : MonoBehaviour
 {
-    GameObject baymax;
+    public GameObject baymax;
     BaymaxController baymaxCont;
 
     // Start is called before the first frame update
@@ -19,6 +19,6 @@ public class AlcoholDemo : MonoBehaviour
 
     public void EndDemo()
     {
-        baymaxCont.Idle();
+        StartCoroutine(baymaxCont.IdleCoroutine());
     }
 }

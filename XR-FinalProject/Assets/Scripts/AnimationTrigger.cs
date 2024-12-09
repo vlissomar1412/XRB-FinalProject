@@ -80,6 +80,7 @@ public class AnimationTrigger : MonoBehaviour
         animationController.SetBool("PointingFingerDown", false);
     }
 
+    /*
     // Get user inputs from the keyboard
     void Update()
     {
@@ -108,5 +109,6 @@ public class AnimationTrigger : MonoBehaviour
             PointingFingerDown();
         }
     }
+    */
 
 }

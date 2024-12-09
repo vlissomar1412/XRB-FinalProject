@@ -26,12 +26,13 @@ public class BaymaxController : MonoBehaviour
     private const int WAVING_LAYER = 2;
     private const int POINTING_LAYER = 3;
     private const int HEADN_LAYER = 4;
+    private const int EXPLAINING_LAYER = 5;
 
     IEnumerator intro, checkup, idle, bactine, bandaid, thermometer;
     void Start()
     {
         intro = IntroCoroutine();
-        checkup = HealthCheckupCoroutine();
+        //checkup = HealthCheckupCoroutine();
         bactine = BactineCoroutine();
         idle = IdleCoroutine();
         bandaid = BandAidCoroutine();
@@ -178,6 +179,7 @@ public class BaymaxController : MonoBehaviour
         idling = false;
     }
 
+/*
     IEnumerator HealthCheckupCoroutine()
 {
     end = "I will scan you now";
@@ -216,7 +218,7 @@ public class BaymaxController : MonoBehaviour
     // Return to idle state
     Idle();
 }
-
+*/
 
 
 
@@ -300,6 +302,16 @@ public class BaymaxController : MonoBehaviour
         animationController.SetLayerWeight(POINTING_LAYER, 0);
         animationController.SetLayerWeight(HEADN_LAYER, 1);
         animationController.SetBool("HeadNodding", true);
+    }
+    public void Explaining()
+    {
+        animationController.SetLayerWeight(WALK_LAYER, 0);
+        animationController.SetLayerWeight(HEAD_LAYER, 0);
+        animationController.SetLayerWeight(WAVING_LAYER, 0);
+        animationController.SetLayerWeight(POINTING_LAYER, 0);
+        animationController.SetLayerWeight(HEADN_LAYER, 0);
+        animationController.SetLayerWeight(EXPLAINING_LAYER, 1);
+        animationController.SetTrigger("Explaining");
     }
 
     public void ResetAnimBools()

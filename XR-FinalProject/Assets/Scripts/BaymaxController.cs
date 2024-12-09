@@ -6,16 +6,12 @@ using UnityEngine.XR;
 using UnityEngine.XR.Interaction.Toolkit;
 public class BaymaxController : MonoBehaviour
 {  // This script is responsible for Baymax's and the game's state depending on the players actions
-    // tbh im a little confused w this myself
-
-    // public InputDevice leftController, rightController;
     public enum State {Intro, Idle, Checkup, Explain, Demo };
     public State currentState;
     private bool idling = false;
 
     private AudioSource audioSrc;
     [SerializeField] AudioClip[] clips;
-    //private AnimationTrigger animTrig;
 
     private Animator animationController;
     private const int WALK_LAYER = 0;
@@ -23,20 +19,18 @@ public class BaymaxController : MonoBehaviour
     private const int WAVING_LAYER = 2;
     private const int POINTING_LAYER = 3;
 
-    IEnumerator intro, alcohol, idle, bandaid, checkup;
-    // GameObject grabbedObj;
-    // Start is called before the first frame update
+    IEnumerator intro, checkup, idle, bactine, bandaid, thermometer;
     void Start()
     {
         intro = IntroCoroutine();
-        alcohol = AlchoholCoroutine();
+        bactine = BactineCoroutine();
         idle = IdleCoroutine();
         bandaid = BandAidCoroutine();
         checkup = HealthCheckupCoroutine();
+        thermometer = ThermometerCoroutine();
 
 
-        currentState = State.Idle;
-        //animTrig = GetComponent<AnimationTrigger>();
+        currentState = State.Intro;
         audioSrc = GetComponent<AudioSource>();
         animationController = GetComponent<Animator>();
         StartCoroutine(intro);
@@ -52,12 +46,13 @@ public class BaymaxController : MonoBehaviour
         }
     }
 
-    public void AlcoholDemo()
+    public void BactineDemo()
     {
         if (currentState == State.Idle)
         {
+            idling = false;
             currentState = State.Demo;
-            StartCoroutine(alcohol);
+            StartCoroutine(bactine);
         }
     }
 
@@ -65,15 +60,24 @@ public class BaymaxController : MonoBehaviour
     {
         if (currentState == State.Idle)
         {
+            idling = false;
             currentState = State.Demo;
             StartCoroutine(bandaid);
         }
     }
 
-
-    IEnumerator AlchoholCoroutine()
+    public void ThermometerDemo()
     {
-        currentState = State.Explain;
+        if (currentState == State.Idle)
+        {
+            idling = false;
+            currentState = State.Demo;
+            StartCoroutine(thermometer);
+        }
+    }
+
+    IEnumerator BactineCoroutine()
+    {
         // display text: reference audio clip
         audioSrc.PlayOneShot(clips[1]);             // play audio clip
         // play explanation animation
@@ -83,9 +87,18 @@ public class BaymaxController : MonoBehaviour
 
     IEnumerator BandAidCoroutine()
     {
-        currentState = State.Explain;
         // display text: write something ig
         // play explanation animation
+        yield return new WaitForSeconds(5.0f);
+        // hide text
+    }
+    
+    IEnumerator ThermometerCoroutine()
+    {
+        // display text: write something abt how baymax's scan function uses the same technology with infrared lights idk googl
+        // play explanation animation
+
+        //perhaps add functionality here
         yield return new WaitForSeconds(5.0f);
         // hide text
     }
@@ -98,13 +111,19 @@ public class BaymaxController : MonoBehaviour
 
         audioSrc.PlayOneShot(clips[0]);             // play audio clip
        
-        WavingHandUp();                    // play wave animation
-        yield return new WaitForSeconds(3.0f);
+        WavingHandUp();                             // play wave animation
+        yield return new WaitForSeconds(4.0f);
         WavingHandDown();
         yield return new WaitForSeconds(3.0f);
         // hide text
 
         StartCoroutine(checkup);
+    }
+
+    // just for inspector assignments
+    public void Idle()
+    {
+        StartCoroutine(idle);
     }
 
 

@@ -14,11 +14,7 @@ public class AlcoholDemo : MonoBehaviour
     }
     public void StartDemo()
     {
-        baymaxCont.AlcoholDemo();
+        baymaxCont.BactineDemo();
     }
 
-    public void EndDemo()
-    {
-        StartCoroutine(baymaxCont.IdleCoroutine());
-    }
 }

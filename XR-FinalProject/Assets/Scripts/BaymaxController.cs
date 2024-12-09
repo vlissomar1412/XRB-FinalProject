@@ -30,10 +30,10 @@ public class BaymaxController : MonoBehaviour
     void Start()
     {
         intro = IntroCoroutine();
+        checkup = HealthCheckupCoroutine();
         bactine = BactineCoroutine();
         idle = IdleCoroutine();
         bandaid = BandAidCoroutine();
-        checkup = HealthCheckupCoroutine();
         thermometer = ThermometerCoroutine();
 
         currentState = State.Intro;

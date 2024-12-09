@@ -180,23 +180,43 @@ public class BaymaxController : MonoBehaviour
 
     IEnumerator HealthCheckupCoroutine()
 {
+    end = "I will scan you now";
     currentState = State.Checkup;
 
-    txt.text = "I will scan you now";
-    audioSrc.PlayOneShot(scanClip); // Assuming scanClip has "I will scan you now" audio
-    yield return new WaitForSeconds(2.0f);
+    HeadNodding(); // Trigger head-nodding animation
 
-    txt.text = "Scanning in progress...";
-    audioSrc.PlayOneShot(scanningSound); // Play scanning sound for 3 seconds
-    yield return new WaitForSeconds(3.0f);
+    // Activate scanning particle effect
+    ParticleSystem scanEffect = GetComponent<ParticleSystem>();
+    if (scanEffect != null)
+    {
+        scanEffect.Play();
+    }
 
-    txt.text = "Scan complete";
-    audioSrc.PlayOneShot(completeClip); // Assuming completeClip has "Scan complete" audio
-    yield return new WaitForSeconds(1.0f);
+    // Simulate scanning progress
+    for (float i = 0; i < 5f; i += 1f)
+    {
+        end = $"Scanning... {i * 20}% completed";
+        yield return new WaitForSeconds(1f);
+    }
 
-    StartCoroutine("IdleCoroutine");
+    // Complete scan and provide feedback
+    end = "Scan Complete";
+    audioSrc.PlayOneShot(scanCompleteClip);
+
+    // Add a short delay before feedback
+    yield return new WaitForSeconds(1f);
+    end = "Vital signs are great! Remember to drink water and stretch.";
+
+    // Deactivate particle effect
+    if (scanEffect != null)
+    {
+        scanEffect.Stop();
+    }
+
+    // Return to idle state
     Idle();
 }
+
 
 
 

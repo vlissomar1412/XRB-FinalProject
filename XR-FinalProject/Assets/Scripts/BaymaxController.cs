@@ -111,34 +111,34 @@ public class BaymaxController : MonoBehaviour
     {
         end = "Bactine Coroutine in Process";  // display text: reference audio clip
         audioSrc.PlayOneShot(clips[1]);             // play audio clip
-        RotatingHead();                             // play explanation animation
+        Explaining();                             // play explanation animation
         yield return new WaitForSeconds(3.0f);
 
-        ResetRotatingHead();
+        // ResetRotatingHead();
 
         // hide text
 
-        Idle();
+        // Idle();
     }
 
     IEnumerator BandAidCoroutine()
     {
         end =  "BandAid Coroutine in Process";  // display text: write something ig
-        RotatingHead();                             // play explanation animation
+        Explaining();                             // play explanation animation
         yield return new WaitForSeconds(3.0f);
 
-        ResetRotatingHead();
+        // ResetRotatingHead();
 
         // hide text
 
-        Idle();
+        // Idle();
     }
     
     IEnumerator ThermometerCoroutine()
     {
 
         end =  "Thermometer Coroutine in Process";// display text: write something abt how baymax's scan function uses the same technology with infrared lights idk googl
-        RotatingHead();                             // play explanation animation
+        Explaining();                             // play explanation animation
 
         //perhaps add functionality here
         yield return new WaitForSeconds(5.0f);
@@ -147,7 +147,7 @@ public class BaymaxController : MonoBehaviour
 
         // hide text
 
-        Idle();
+        //Idle();
     }
 
     IEnumerator IntroCoroutine()

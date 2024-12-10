@@ -16,10 +16,6 @@ MonoBehaviour:
   colorSpace: 7
   requestsVisualFaceTracking: 1
   requestsAudioFaceTracking: 1
-<<<<<<< Updated upstream
   telemetryProjectGuid: d2b629ab-03c6-4451-bbba-573ac8cf4a96
-=======
-  telemetryProjectGuid: 783b379a-2c7b-4080-836b-a0855b963fb9
->>>>>>> Stashed changes
   bodyTrackingFidelity: 1
   bodyTrackingJointSet: 0

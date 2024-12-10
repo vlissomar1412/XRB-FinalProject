@@ -17,8 +17,8 @@ public class BaymaxController : MonoBehaviour
     [SerializeField] AudioClip[] clips;
 
     public TextMeshProUGUI txt;
-    string start = "";
-    string end = "";
+    // string start = "";
+    // string end = "";
 
     private Animator animationController;
     private const int WALK_LAYER = 0;
@@ -28,19 +28,21 @@ public class BaymaxController : MonoBehaviour
     private const int HEADN_LAYER = 4;
     private const int EXPLAINING_LAYER = 5;
 
-    IEnumerator intro, checkup, idle, bactine, bandaid, thermometer;
+    // IEnumerator intro, checkup, idle, bactine, bandaid, thermometer;
     void Start()
     {
+        /*
         intro = IntroCoroutine();
         checkup = HealthCheckupCoroutine();
         bactine = BactineCoroutine();
         idle = IdleCoroutine();
         bandaid = BandAidCoroutine();
         thermometer = ThermometerCoroutine();
+        */
 
         currentState = State.Intro;
-        start = Enum.GetName(typeof(State), currentState);
-        txt.text = start + "Startup";
+        // start = Enum.GetName(typeof(State), currentState);
+        txt.text = "";
         audioSrc = GetComponent<AudioSource>();
         animationController = GetComponent<Animator>();
         StartCoroutine("IntroCoroutine");
@@ -49,8 +51,8 @@ public class BaymaxController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        txt.text = start + "\n" + end;
-        start = Enum.GetName(typeof(State), currentState);
+        // txt.text = start + "\n" + end;
+        // start = Enum.GetName(typeof(State), currentState);
         //prevents Idle() from being called every fucking frame
         if (currentState == State.Idle && !idling)
         {
@@ -62,14 +64,14 @@ public class BaymaxController : MonoBehaviour
     {
         StopAllCoroutines();
         currentState = State.Idle;
-        start = "Idle";
-        end = "";
+        // start = "Idle";
+        // end = "";
         StartCoroutine("IdleCoroutine");
     }
 
     public void BactineDemo()
     {
-        end = "Bactine Grabbed";
+        // end = "Bactine Grabbed";
         if (currentState == State.Checkup)
         {
             return;
@@ -83,7 +85,7 @@ public class BaymaxController : MonoBehaviour
 
     public void BandAidDemo()
     {
-        end = "Band Aids Grabbed";
+        // end = "Band Aids Grabbed";
         if (currentState == State.Checkup)
         {
             return;
@@ -96,7 +98,7 @@ public class BaymaxController : MonoBehaviour
 
     public void ThermometerDemo()
     {
-        end = "Thermometer Grabbed";
+        // end = "Thermometer Grabbed";
         if (currentState == State.Checkup)
         {
             return;
@@ -109,43 +111,44 @@ public class BaymaxController : MonoBehaviour
 
     IEnumerator BactineCoroutine()
     {
-        end = "Bactine Coroutine in Process";  // display text: reference audio clip
+        txt.text = "An antibacterial spray. The primary ingredient is bacitracin";  // display text: reference audio clip
         audioSrc.PlayOneShot(clips[1]);             // play audio clip
-        Explaining();                             // play explanation animation
-        yield return new WaitForSeconds(3.0f);
+        Explaining();                               // play explanation animation
+        yield return new WaitForSeconds(8.0f);
 
         // ResetRotatingHead();
 
-        // hide text
+        txt.text = "";                              // hide text
 
-        // Idle();
+        // BandAidDemo(); // Idle();
     }
 
     IEnumerator BandAidCoroutine()
     {
-        end =  "BandAid Coroutine in Process";  // display text: write something ig
+        txt.text =  "Baymax: Band-Aids. An adhesive bandage used to cover small cuts and scrapes";  // display text: write something ig
         Explaining();                             // play explanation animation
-        yield return new WaitForSeconds(3.0f);
-
+        yield return new WaitForSeconds(5.0f);
+        txt.text = "Sometimes I use these for air leaks";
+        yield return new WaitForSeconds(4.0f);
         // ResetRotatingHead();
 
-        // hide text
+        txt.text = "";                              // hide text
 
-        // Idle();
+        //ThermometerDemo();// Idle();
     }
     
     IEnumerator ThermometerCoroutine()
     {
 
-        end =  "Thermometer Coroutine in Process";// display text: write something abt how baymax's scan function uses the same technology with infrared lights idk googl
-        Explaining();                             // play explanation animation
-
+        txt.text =  "Baymax: A laser thermometer. It measures temperature by detecting infrared radiation emitted.";// display text: write something abt how baymax's scan function uses the same technology with infrared lights idk googl
+        Explaining();                               // play explanation animation
+        
         //perhaps add functionality here
-        yield return new WaitForSeconds(5.0f);
+        yield return new WaitForSeconds(8.0f);
 
         // ResetRotatingHead();
 
-        // hide text
+        txt.text = "";                              // hide text
 
         //Idle();
     }
@@ -153,29 +156,29 @@ public class BaymaxController : MonoBehaviour
     IEnumerator IntroCoroutine()
     {
         currentState = State.Intro;
-        yield return new WaitForSeconds(5.0f);      // buffer time to avoid jumpscare lmao
-        // display text: reference the audio clip
+        yield return new WaitForSeconds(5.0f);                      // buffer time to avoid jumpscare lmao
+        txt.text = "Hello! I am Baymax, your personal healthcare companion"; // display text: reference the audio clip
 
-        audioSrc.PlayOneShot(clips[0]);             // play audio clip
+        audioSrc.PlayOneShot(clips[0]);                             // play audio clip
        
-        WavingHandUp();                             // play wave animation
+        WavingHandUp();                                             // play wave animation
         yield return new WaitForSeconds(4.0f);
         WavingHandDown();
         yield return new WaitForSeconds(3.0f);
-        // hide text
+        txt.text = "";                                              // hide text
 
-        //Idle();//checkup);
-        StartCoroutine("HealthCheckupCoroutine");
+        // Idle();
+         StartCoroutine("HealthCheckupCoroutine"); //BactineDemo();
     }
 
     IEnumerator IdleCoroutine()
     {
-        end = "idling";
+        // end = "idling";
         idling = true;
         // periodically display text to interact with items
-        // display text: ??? write something ig
+        txt.text = "Let's learn more about these basic medical supplies!";      // display text
         yield return new WaitForSeconds(8f);
-        // hide text
+        txt.text = "";                                              // hide text
         yield return new WaitForSeconds(15.0f);
         idling = false;
     }
@@ -183,7 +186,8 @@ public class BaymaxController : MonoBehaviour
 
     IEnumerator HealthCheckupCoroutine()
 {
-    end = "I will scan you now";
+    txt.text = "I will scan you now";
+    audioSrc.PlayOneShot(clips[2]);
     currentState = State.Checkup;
 
     HeadNodding(); // Trigger head-nodding animation
@@ -199,17 +203,16 @@ public class BaymaxController : MonoBehaviour
     // Simulate scanning progress
     for (float i = 0; i < 5f; i += 1f)
     {
-        end = $"Scanning... {i * 20}% completed";
+        txt.text = $"Baymax: Scanning... {i * 20}% completed";
         yield return new WaitForSeconds(1f);
     }
 
     // Complete scan and provide feedback
-    end = "Scan Complete";
-    audioSrc.PlayOneShot(clips[2]);
+    txt.text = "Scan Complete";
 
     // Add a short delay before feedback
     yield return new WaitForSeconds(1f);
-    end = "Vital signs are great! Remember to drink water and stretch.";
+    txt.text = "Vital signs are great! Remember to drink water and stretch.";
 
     // Deactivate particle effect
     if (scanEffect != null)

@@ -32,7 +32,7 @@ public class BaymaxController : MonoBehaviour
     void Start()
     {
         intro = IntroCoroutine();
-        //checkup = HealthCheckupCoroutine();
+        checkup = HealthCheckupCoroutine();
         bactine = BactineCoroutine();
         idle = IdleCoroutine();
         bandaid = BandAidCoroutine();
@@ -164,7 +164,8 @@ public class BaymaxController : MonoBehaviour
         yield return new WaitForSeconds(3.0f);
         // hide text
 
-        Idle();//checkup);
+        //Idle();//checkup);
+        StartCoroutine("HealthCheckupCoroutine");
     }
 
     IEnumerator IdleCoroutine()
@@ -179,7 +180,7 @@ public class BaymaxController : MonoBehaviour
         idling = false;
     }
 
-/*
+
     IEnumerator HealthCheckupCoroutine()
 {
     end = "I will scan you now";
@@ -188,9 +189,10 @@ public class BaymaxController : MonoBehaviour
     HeadNodding(); // Trigger head-nodding animation
 
     // Activate scanning particle effect
-    ParticleSystem scanEffect = GetComponent<ParticleSystem>();
+    ParticleSystem scanEffect = GetComponentInChildren<ParticleSystem>();
     if (scanEffect != null)
     {
+        Debug.LogError("Particle found");
         scanEffect.Play();
     }
 
@@ -203,7 +205,7 @@ public class BaymaxController : MonoBehaviour
 
     // Complete scan and provide feedback
     end = "Scan Complete";
-    audioSrc.PlayOneShot(scanCompleteClip);
+    audioSrc.PlayOneShot(clips[2]);
 
     // Add a short delay before feedback
     yield return new WaitForSeconds(1f);
@@ -218,7 +220,7 @@ public class BaymaxController : MonoBehaviour
     // Return to idle state
     Idle();
 }
-*/
+
 
 
 
